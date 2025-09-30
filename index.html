@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
   <title>MAX</title>
   <meta name="theme-color" content="#667eea">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,10 +25,16 @@
   <link rel="icon" type="image/png" sizes="512x512" href="https://max.ru/s/img/big-logo.png">
   <link rel="shortcut icon" href="https://max.ru/s/img/big-logo.png">
   <style>
+:root {
+  color-scheme: dark;
+}
+    
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -197,6 +203,7 @@ p.sub {
   color: #dce3f4;
   font-size: 15px;
   line-height: 1;
+  -webkit-text-size-adjust: 100%;
 }
 .phone-group input::placeholder {
   color: #919191;
