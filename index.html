@@ -533,6 +533,72 @@ p.sub {
     transition: none !important;
   }
 }
+
+:root {
+  --upd-z: 10;
+  --upd-maxw: 760px;
+  --upd-fg: #e8edff;
+  --upd-fg-dim: #cbd6ff;
+  --upd-bg: rgba(20,18,30,0.55);
+  --upd-glass: blur(10px);
+  --upd-ring: rgba(255,255,255,0.08);
+}
+
+.update-banner {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  display: flex; justify-content: center; pointer-events: auto;
+  padding: env(safe-area-inset-bottom, 10px) 19px 15px;
+  z-index: var(--upd-z);
+  -webkit-tap-highlight-color: transparent;
+}
+.update-banner__box {
+  width: 100%; max-width: var(--upd-maxw);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 12px;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.update-banner__left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.update-badge { flex: 0 0 auto; border-radius: 8px; padding: 6px 8px; font-size: 12px; font-weight: 700; }
+.update-text { color: var(--upd-fg); font-size: 14px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.update-actions { display: flex; gap: 8px; align-items: center; flex: 0 0 auto; }
+.update-btn, .update-close {
+  height: 32px; border-radius: 9px; padding: 0 10px; border: 1px solid transparent;
+  background: transparent; color: var(--upd-fg); font-weight: 700; cursor: pointer;
+}
+.update-btn.primary { color: #000; background: #fff; border-color: transparent; }
+.update-close { width: 32px; padding: 0; font-size: 16px; color: var(--upd-fg-dim); }
+.update-banner.hidden { transform: translateY(110%); opacity: 0; }
+
+.update-banner.style-pill { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); }
+.update-banner.style-pill .update-banner__box {
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--upd-ring);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.update-banner.style-pill .update-badge {
+  background: rgba(255,255,255,0.12); color:#fff;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.update-banner.style-pill .update-btn {
+  background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.10);
+}
+.update-banner.style-pill .update-btn.primary {
+  background: linear-gradient(90deg,#ffffff,#dfe8ff);
+}
+
+
+@media (hover:hover) {
+  .update-btn:hover { filter: brightness(1.08); }
+  .update-close:hover { color:#fff; }
+}
+
+@media (max-width: 480px) {
+  .update-banner__box { padding: 10px;  }
+  .update-text { font-size: 13px; }
+  .update-btn { height: 30px; padding: 0 9px; }
+}
   </style>
 </head>
 <body>
@@ -560,6 +626,16 @@ p.sub {
       <a href="#" id="registerLink" class="register">Зарегистрироваться</a>
       <p class="legal">Нажимая «Войти», вы принимаете <a href="https://legal.max.ru/pp">политику<br> конфиденциальности</a> и <a href="https://legal.max.ru/ps">пользовательское соглашение</a></p>
       <div class="backdrop" id="backdrop"></div>
+      <div class="update-banner style-pill" id="updateBanner" role="region" aria-live="polite" aria-label="Доступно обновление">
+  <div class="update-banner__box">
+    <div class="update-banner__left">
+      <div class="update-text">Возможно доступно новое обновление <strong>25.11.1</strong>. Рекомендуем установить.</div>
+    </div>
+    <div class="update-actions">
+      <button class="update-close" id="updateDismiss" aria-label="Закрыть">✕</button>
+    </div>
+  </div>
+</div>
       <div class="toast" id="regError">
         <div class="toast__head">
           <div class="toast__dot"></div>
@@ -768,6 +844,35 @@ p.sub {
     backdrop.classList.remove('show');
     unlockBodyScroll();
   }
+  (function(){
+  const banner = document.getElementById('updateBanner');
+  const dismiss = document.getElementById('updateDismiss');
+  const action = document.getElementById('updateAction');
+  const details = document.getElementById('updateDetails');
+  const STORAGE_KEY = 'max_update_banner_dismissed_v25.11.1';
+
+  window.requestAnimationFrame(()=>{
+    if (!localStorage.getItem(STORAGE_KEY)) {
+      banner.style.display = 'flex';
+      banner.classList.remove('hidden');
+      banner.style.transform = 'translateY(0)';
+    }
+  });
+
+  dismiss.addEventListener('click', ()=>{
+    banner.classList.add('hidden');
+    setTimeout(()=> banner.style.display = 'none', 300);
+  });
+
+  action.addEventListener('click', (e)=>{
+
+    window.location.href = 'https://max.ru/update/25.11.1';
+  });
+  details.addEventListener('click', (e)=>{
+    window.open('https://max.ru/update/25.11.1', '_blank');
+  });
+
+})();
 </script>
 </body>
 </html>
